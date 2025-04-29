@@ -18,16 +18,9 @@ class TestCreateOrder:
             **data.DataForCreateOrder.CREATE_ORDER_BODY,
             **color  # Добавляем цвет в тело запроса
         }
-
         # Отправка запроса на создание заказа
         response = OrderMethods.create_order(order_body)
-
         # Проверка статуса ответа
         assert response.status_code == expected_status
-
-        # Проверка, что в ответе есть трек
         response_json = response.json()
-        if should_have_track:
-            assert "track" in response_json
-        else:
-            assert "track" not in response_json
+        assert "track" in response_json
